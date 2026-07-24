@@ -3,96 +3,39 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Rijeka cam - thumbs</title>
+  <title>Rijeka cam — thumbs</title>
   <style>
     body { font-family: system-ui, -apple-system, Roboto, "Segoe UI", Arial; margin: 0; padding: 1rem; background:#f7f7f7; color:#111; }
     h1 { margin: 0 0 1rem 0; font-size:1.25rem; }
-    #info { margin-bottom: 1rem; font-size:0.95rem; color:#444; }
-    #gallery { display:grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap:12px; }
-    .card { background:#fff; border-radius:6px; overflow:hidden; box-shadow:0 1px 3px rgba(0,0,0,0.08); display:flex; flex-direction:column; }
-    .card img { display:block; width:100%; height:150px; object-fit:cover; }
-    .caption { padding:8px; font-size:0.85rem; color:#333; word-break:break-all; }
-    .empty { color:#666; padding:2rem 0; text-align:center; }
-    a.full { text-decoration:none; color:inherit; }
-    @media (max-width:420px){ .card img { height:120px; } }
+    .gallery { display:flex; flex-wrap:wrap; gap:12px; }
+    .item { background:#fff; padding:6px; border-radius:6px; box-shadow:0 1px 3px rgba(0,0,0,.06); width:180px; text-align:center; }
+    .item img { width:100%; height:120px; object-fit:cover; display:block; border-radius:4px; }
+    .caption { font-size:0.85rem; margin-top:6px; word-break:break-all; color:#333; }
+    @media (max-width:420px){ .item { width:46%; } .item img { height:100px; } }
   </style>
 </head>
 <body>
-  <h1>Rijeka cam — pregled slika (thumbs)</h1>
-  <div id="info">Dohvaćam popis .jpg datoteka...</div>
-  <div id="gallery" aria-live="polite"></div>
-
-  <script>
-    (async () => {
-      // Podesi ovdje, ako želiš dohvat s druge grane/sha
-      const owner = 'Anton700';
-      const repo  = 'rijeka-cam-thumbs';
-      const path  = 'thumbs';      
-      const infoEl = document.getElementById('info');
-      const gallery = document.getElementById('gallery');
-
-      // GitHub Contents API endpoint (javna repo); vraća JSON niz objekata za folder
-      const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${encodeURIComponent(path)}?ref=${encodeURIComponent(ref)}`;
-
-      try {
-        const res = await fetch(apiUrl);
-        if (!res.ok) {
-          if (res.status === 403) {
-            infoEl.textContent = 'Greška: prešli ste GitHub API rate limit ili je zahtjev blokiran (403). Probaj ponovno kasnije ili koristi token.';
-          } else if (res.status === 404) {
-            infoEl.textContent = 'Greška: direktorij nije pronađen (404). Provjeri owner/repo/path/ref.';
-          } else {
-            infoEl.textContent = `Greška pri dohvatu: ${res.status} ${res.statusText}`;
-          }
-          return;
-        }
-
-        const items = await res.json();
-        // items je niz objekata; filtriramo .jpg (case-insensitive)
-        const jpgs = items.filter(i => i.type === 'file' && /\.jpe?g$/i.test(i.name));
-
-        if (jpgs.length === 0) {
-          infoEl.textContent = 'Nema .jpg datoteka u ovoj mapi.';
-          gallery.innerHTML = '<div class="empty">No images found.</div>';
-          return;
-        }
-
-        infoEl.textContent = `Pronađeno ${jpgs.length} slika. Klikni na sliku za puni prikaz.`;
-
-        // Sortiramo po imenu (ako želiš po datumu - trebalo bi dodatno pozvati API za svaki file)
-        jpgs.sort((a,b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' }));
-
-        // Prikažemo
-        for (const f of jpgs) {
-          // preferiramo download_url polje koje API vraća
-          const src = f.download_url || `https://raw.githubusercontent.com/${owner}/${repo}/${ref}/${path}/${encodeURIComponent(f.name)}`;
-          const card = document.createElement('div');
-          card.className = 'card';
-          // link otvara u novom tabu puni raw/raw view
-          const link = document.createElement('a');
-          link.className = 'full';
-          link.href = src;
-          link.target = '_blank';
-          link.rel = 'noopener noreferrer';
-          // image (koristimo lazy loading)
-          const img = document.createElement('img');
-          img.loading = 'lazy';
-          img.src = src;
-          img.alt = f.name;
-          // caption
-          const cap = document.createElement('div');
-          cap.className = 'caption';
-          cap.textContent = f.name;
-          link.appendChild(img);
-          card.appendChild(link);
-          card.appendChild(cap);
-          gallery.appendChild(card);
-        }
-      } catch (err) {
-        console.error(err);
-        infoEl.textContent = 'Dogodila se pogreška pri dohvaćanju podataka. Provjeri konzolu za detalje.';
-      }
-    })();
-  </script>
+  <h1>Rijeka cam — thumbs</h1>
+  <div class="gallery">
+    <div class="item"><a href="10x.jpg" target="_blank" rel="noopener noreferrer"><img src="10x.jpg" alt="10x.jpg"></a><div class="caption">10x.jpg</div></div>
+    <div class="item"><a href="15x.jpg" target="_blank" rel="noopener noreferrer"><img src="15x.jpg" alt="15x.jpg"></a><div class="caption">15x.jpg</div></div>
+    <div class="item"><a href="16x.jpg" target="_blank" rel="noopener noreferrer"><img src="16x.jpg" alt="16x.jpg"></a><div class="caption">16x.jpg</div></div>
+    <div class="item"><a href="abica1.jpg" target="_blank" rel="noopener noreferrer"><img src="abica1.jpg" alt="abica1.jpg"></a><div class="caption">abica1.jpg</div></div>
+    <div class="item"><a href="abica2.jpg" target="_blank" rel="noopener noreferrer"><img src="abica2.jpg" alt="abica2.jpg"></a><div class="caption">abica2.jpg</div></div>
+    <div class="item"><a href="abica360.jpg" target="_blank" rel="noopener noreferrer"><img src="abica360.jpg" alt="abica360.jpg"></a><div class="caption">abica360.jpg</div></div>
+    <div class="item"><a href="acvarska1.jpg" target="_blank" rel="noopener noreferrer"><img src="acvarska1.jpg" alt="acvarska1.jpg"></a><div class="caption">acvarska1.jpg</div></div>
+    <div class="item"><a href="adranski1.jpg" target="_blank" rel="noopener noreferrer"><img src="adranski1.jpg" alt="adranski1.jpg"></a><div class="caption">adranski1.jpg</div></div>
+    <div class="item"><a href="adranski3.jpg" target="_blank" rel="noopener noreferrer"><img src="adranski3.jpg" alt="adranski3.jpg"></a><div class="caption">adranski3.jpg</div></div>
+    <div class="item"><a href="adranski360.jpg" target="_blank" rel="noopener noreferrer"><img src="adranski360.jpg" alt="adranski360.jpg"></a><div class="caption">adranski360.jpg</div></div>
+    <div class="item"><a href="adranski4.jpg" target="_blank" rel="noopener noreferrer"><img src="adranski4.jpg" alt="adranski4.jpg"></a><div class="caption">adranski4.jpg</div></div>
+    <div class="item"><a href="adranski5.jpg" target="_blank" rel="noopener noreferrer"><img src="adranski5.jpg" alt="adranski5.jpg"></a><div class="caption">adranski5.jpg</div></div>
+    <div class="item"><a href="ardbrigade1.jpg" target="_blank" rel="noopener noreferrer"><img src="ardbrigade1.jpg" alt="ardbrigade1.jpg"></a><div class="caption">ardbrigade1.jpg</div></div>
+    <div class="item"><a href="enckea1.jpg" target="_blank" rel="noopener noreferrer"><img src="enckea1.jpg" alt="enckea1.jpg"></a><div class="caption">enckea1.jpg</div></div>
+    <div class="item"><a href="patija1.jpg" target="_blank" rel="noopener noreferrer"><img src="patija1.jpg" alt="patija1.jpg"></a><div class="caption">patija1.jpg</div></div>
+    <div class="item"><a href="patija2.jpg" target="_blank" rel="noopener noreferrer"><img src="patija2.jpg" alt="patija2.jpg"></a><div class="caption">patija2.jpg</div></div>
+    <div class="item"><a href="patija3.jpg" target="_blank" rel="noopener noreferrer"><img src="patija3.jpg" alt="patija3.jpg"></a><div class="caption">patija3.jpg</div></div>
+    <div class="item"><a href="patija4.jpg" target="_blank" rel="noopener noreferrer"><img src="patija4.jpg" alt="patija4.jpg"></a><div class="caption">patija4.jpg</div></div>
+    <div class="item"><a href="veslarska1.jpg" target="_blank" rel="noopener noreferrer"><img src="veslarska1.jpg" alt="veslarska1.jpg"></a><div class="caption">veslarska1.jpg</div></div>
+  </div>
 </body>
 </html>
