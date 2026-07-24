@@ -2,9 +2,15 @@ name: Generate camera thumbnails
 
 on:
   schedule:
-    # Svakih 10 minuta. GitHub Actions cron nije 100% precizan
+    # Svakih 10 minuta. GitHub Actions cron
     - cron: '*/10 * * * *'
-  workflow_dispatch: {}   # omogućuje ručno pokretanje s "Run workflow" gumba
+  workflow_dispatch: {}   # omogućuje ručno pokretanje s "Run workflow" gumba  
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/generate-thumbs.yml'
+  
 
 permissions:
   contents: write
