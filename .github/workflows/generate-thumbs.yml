@@ -45,8 +45,9 @@ jobs:
           opatija2;https://kam.cesterijeka.sticker.hr/opatija2/index.m3u8
           opatija3;https://kam.cesterijeka.sticker.hr/opatija3/index.m3u8
           opatija4;https://kam.cesterijeka.sticker.hr/opatija4/index.m3u8
-          k15x;https://kam.rijekaplus.sticker.hr/k15x/stream.m3u8
-          k16x;https://kam.rijekaplus.sticker.hr/k16x/stream.m3u8
+          k15x;https://kam.rijekaplus.sticker.hr/k15x/index.m3u8
+          k16x;https://kam.rijekaplus.sticker.hr/k16x/index.m3u8
+          k10x;https://kam.rijekaplus.sticker.hr/k10x/index.m3u8
           "
 
           echo "$cameras" | while IFS=';' read -r id url; do
