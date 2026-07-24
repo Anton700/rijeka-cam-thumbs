@@ -48,6 +48,10 @@ jobs:
           k15x;https://kam.rijekaplus.sticker.hr/k15x/index.m3u8
           k16x;https://kam.rijekaplus.sticker.hr/k16x/index.m3u8
           k10x;https://kam.rijekaplus.sticker.hr/k10x/index.m3u8
+          orehovica1;https://kam.rijekaplus.sticker.hr/k10x/orehovica1.m3u8
+          orehovica2;https://kam.rijekaplus.sticker.hr/k10x/orehovica2.m3u8
+          orehovica3;https://kam.rijekaplus.sticker.hr/k10x/orehovica3.m3u8
+          orehovica5;https://kam.rijekaplus.sticker.hr/k10x/orehovica4.m3u8
           "
 
           echo "$cameras" | while IFS=';' read -r id url; do
