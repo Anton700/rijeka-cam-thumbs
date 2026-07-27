@@ -79,13 +79,13 @@ jobs:
 
       # Uploada direktno na FTP
       # Nema git commita, nema CDN-a, nema cache pitanja - datoteke
-      - name: Upload thumbnails via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: Upload thumbnails via SFTP
+        uses: wangyucode/sftp-upload-action@v2.0.2
         with:
-          server: ${{ secrets.FTP_SERVER }}
+          host: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./thumbs/
-          server-dir: /slike/
-          exclude: |
-            **/*.log
+          local_dir: ./thumbs/
+          remote_dir: /slike/
+          delete: 'false'
+          skip_known_hosts: 'true'  # ← Preskoči validaciju
