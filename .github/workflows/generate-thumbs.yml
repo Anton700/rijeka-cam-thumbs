@@ -2,15 +2,13 @@ name: Generate camera thumbnails
 
 on:
   schedule:
-    # Svakih 10 minuta. GitHub Actions cron
-    - cron: '*/10 * * * *'
-  workflow_dispatch: {}   # omogućuje ručno pokretanje s "Run workflow" gumba  
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
   push:
     branches:
       - main
     paths:
-      - '.github/workflows/generate-thumbs.yml'
-  
+      - ".github/workflows/generate-thumbs.yml"
 
 permissions:
   contents: write
@@ -18,83 +16,112 @@ permissions:
 jobs:
   thumbs:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Generate thumbnails with ffmpeg
+      - name: Install FFmpeg
         run: |
-          set -x
-          sudo apt-get update
-          sudo apt-get install -y ffmpeg
+          if ! command -v ffmpeg >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y ffmpeg
+          fi
+
+      - name: Generate thumbnails
+        shell: bash
+        run: |
+
+          set -uo pipefail
 
           mkdir -p thumbs
-          set +e
 
-          ffmpeg -version || true
-          printf 'ID=[%s]\n' "$id"
-          printf 'FILE=[thumbs/%s.jpg]\n' "$id"
+          cameras=(
+          "veslarska1;https://kam.rijekaplus.sticker.hr/veslarska1/index.m3u8"
+          "bacvarska1;https://kam.rijekaplus.sticker.hr/bacvarska1/index.m3u8"
+          "henckea1;https://kam.rijekaplus.sticker.hr/henckea1/index.m3u8"
+          "gardbrigade1;https://kam.rijekaplus.sticker.hr/gardbrigade1/index.m3u8"
+          "jadranski1;https://kam.rijekaplus.sticker.hr/jadranski1/index.m3u8"
+          "jadranski3;https://kam.rijekaplus.sticker.hr/jadranski3/index.m3u8"
+          "jadranski360;https://kam.rijekaplus.sticker.hr/jadranski360/index.m3u8"
+          "jadranski5;https://kam.rijekaplus.sticker.hr/jadranski5/index.m3u8"
+          "jadranski4;https://kam.rijekaplus.sticker.hr/jadranski4/index.m3u8"
+          "zabica1;https://kam.rijekaplus.sticker.hr/zabica1/index.m3u8"
+          "zabica2;https://kam.rijekaplus.sticker.hr/zabica2/index.m3u8"
+          "zabica360;https://kam.rijekaplus.sticker.hr/zabica360/index.m3u8"
+          "opatija1;https://kam.cesterijeka.sticker.hr/opatija1/index.m3u8"
+          "opatija2;https://kam.cesterijeka.sticker.hr/opatija2/index.m3u8"
+          "opatija3;https://kam.cesterijeka.sticker.hr/opatija3/index.m3u8"
+          "opatija4;https://kam.cesterijeka.sticker.hr/opatija4/index.m3u8"
+          "k10x;https://kam.rijekaplus.sticker.hr/k10x/index.m3u8"
+          "k15x;https://kam.rijekaplus.sticker.hr/k15x/index.m3u8"
+          "k16x;https://kam.rijekaplus.sticker.hr/k16x/index.m3u8"
+          "orehovica1;https://kam.rijekaplus.sticker.hr/orehovica1/index.m3u8"
+          "orehovica2;https://kam.rijekaplus.sticker.hr/orehovica2/index.m3u8"
+          "orehovica3;https://kam.rijekaplus.sticker.hr/orehovica3/index.m3u8"
+          "orehovica4;https://kam.rijekaplus.sticker.hr/orehovica4/index.m3u8"
+          )
 
-          # id;stream_url  -- sve kamere kojima treba auto-thumbnail
-          cameras="
-          veslarska1;https://kam.rijekaplus.sticker.hr/veslarska1/index.m3u8
-          bacvarska1;https://kam.rijekaplus.sticker.hr/bacvarska1/index.m3u8
-          henckea1;https://kam.rijekaplus.sticker.hr/henckea1/index.m3u8
-          gardbrigade1;https://kam.rijekaplus.sticker.hr/gardbrigade1/index.m3u8
-          jadranski1;https://kam.rijekaplus.sticker.hr/jadranski1/index.m3u8
-          jadranski3;https://kam.rijekaplus.sticker.hr/jadranski3/index.m3u8
-          jadranski360;https://kam.rijekaplus.sticker.hr/jadranski360/index.m3u8
-          jadranski5;https://kam.rijekaplus.sticker.hr/jadranski5/index.m3u8
-          zabica360;https://kam.rijekaplus.sticker.hr/zabica360/index.m3u8
-          jadranski4;https://kam.rijekaplus.sticker.hr/jadranski4/index.m3u8
-          zabica1;https://kam.rijekaplus.sticker.hr/zabica1/index.m3u8
-          zabica2;https://kam.rijekaplus.sticker.hr/zabica2/index.m3u8
-          opatija1;https://kam.cesterijeka.sticker.hr/opatija1/index.m3u8
-          opatija2;https://kam.cesterijeka.sticker.hr/opatija2/index.m3u8
-          opatija3;https://kam.cesterijeka.sticker.hr/opatija3/index.m3u8
-          opatija4;https://kam.cesterijeka.sticker.hr/opatija4/index.m3u8
-          k15x;https://kam.rijekaplus.sticker.hr/k15x/index.m3u8
-          k16x;https://kam.rijekaplus.sticker.hr/k16x/index.m3u8
-          k10x;https://kam.rijekaplus.sticker.hr/k10x/index.m3u8
-          orehovica1;https://kam.rijekaplus.sticker.hr/orehovica1/index.m3u8
-          orehovica2;https://kam.rijekaplus.sticker.hr/orehovica2/index.m3u8
-          orehovica4;https://kam.rijekaplus.sticker.hr/orehovica4/index.m3u8
-          orehovica3;https://kam.rijekaplus.sticker.hr/orehovica3/index.m3u8
-          "
+          generate_thumb() {
 
-          echo "$cameras" | while IFS=';' read -r id url; do
-            [ -z "$id" ] && continue
-            echo "== $id =="
-            # povećani timeout i log stderr u file
-            timeout 30 ffmpeg -y -loglevel error \
+            local id="$1"
+            local url="$2"
+
+            echo "📷 ${id}"
+
+            timeout 30 ffmpeg \
+              -hide_banner \
+              -loglevel error \
+              -y \
               -i "$url" \
-              -vframes 1 -q:v 4 -vf "scale=560:-1" \
-              "thumbs/${id}.jpg" 2> "thumbs/${id}.log"
+              -frames:v 1 \
+              -q:v 4 \
+              -vf scale=560:-1 \
+              "thumbs/${id}.jpg" \
+              2>"thumbs/${id}.log"
 
             rc=$?
-            if [ $rc -eq 0 ] && [ -s "thumbs/${id}.jpg" ]; then
-              echo "$id OK"
+
+            if [[ $rc -eq 0 && -s "thumbs/${id}.jpg" ]]; then
+              rm -f "thumbs/${id}.log"
+              echo "✅ ${id}"
             else
-              echo "$id FAILED (rc=$rc) - zadržavam staru sliku ako postoji"
-              echo "----- last ffmpeg stderr (tail) for $id -----"
-              tail -n 50 "thumbs/${id}.log" || true
-              echo "---------------------------------------------"
+              echo "❌ ${id} (rc=${rc})"
+
+              if [[ -f "thumbs/${id}.log" ]]; then
+                tail -20 "thumbs/${id}.log"
+              fi
             fi
+
+          }
+
+          for camera in "${cameras[@]}"; do
+
+            IFS=';' read -r id url <<< "$camera"
+
+            [[ -z "$id" ]] && continue
+
+            generate_thumb "$id" "$url"
+
           done
 
-          echo "Listing thumbs directory:"
-          ls -la thumbs || true
+          echo
+          echo "Generated files:"
+          ls -lh thumbs
 
-      - name: Commit and push thumbnails
+      - name: Commit thumbnails
+        shell: bash
         run: |
+
           git config user.name "thumb-bot"
           git config user.email "thumb-bot@users.noreply.github.com"
 
-          # provjeri postoje li .jpg datoteke prije git add
-          if compgen -G "thumbs/*.jpg" > /dev/null; then
-            git add thumbs/*.jpg
-            git diff --staged --quiet || git commit -m "Update camera thumbnails [skip ci]"
-            git push
-          else
-            echo "No thumbnails to add, skipping commit/push"
+          git add thumbs
+
+          if git diff --cached --quiet; then
+            echo "No changes."
+            exit 0
           fi
+
+          git commit -m "Update camera thumbnails [skip ci]"
+          git push
