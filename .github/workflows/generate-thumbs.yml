@@ -1,7 +1,8 @@
-name: Generate and deploy camera thumbnails
+name: Generate camera thumbnails
 
 on:
   schedule:
+    # Svakih 10 minuta
     - cron: '*/10 * * * *'
   workflow_dispatch: {}
   push:
@@ -11,7 +12,7 @@ on:
       - '.github/workflows/generate-thumbs.yml'
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   thumbs:
@@ -19,46 +20,56 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          persist-credentials: true  # osiguraj da git push koristi GITHUB_TOKEN
 
-      - name: Generate thumbnails with ffmpeg
+      - name: Install ffmpeg
         run: |
           set -x
           sudo apt-get update
           sudo apt-get install -y ffmpeg
 
+      - name: Generate thumbnails with ffmpeg
+        run: |
+          set -x
           mkdir -p thumbs
-          set +e
+          # definiraj listu kamera bez vodećih/indendirranih razmaka koristeći here-doc
+          cameras=$(cat <<'CAMERAS'
+veslarska1;https://kam.rijekaplus.sticker.hr/veslarska1/index.m3u8
+bacvarska1;https://kam.rijekaplus.sticker.hr/bacvarska1/index.m3u8
+henckea1;https://kam.rijekaplus.sticker.hr/henckea1/index.m3u8
+gardbrigade1;https://kam.rijekaplus.sticker.hr/gardbrigade1/index.m3u8
+jadranski1;https://kam.rijekaplus.sticker.hr/jadranski1/index.m3u8
+jadranski3;https://kam.rijekaplus.sticker.hr/jadranski3/index.m3u8
+jadranski360;https://kam.rijekaplus.sticker.hr/jadranski360/index.m3u8
+jadranski5;https://kam.rijekaplus.sticker.hr/jadranski5/index.m3u8
+zabica360;https://kam.rijekaplus.sticker.hr/zabica360/index.m3u8
+jadranski4;https://kam.rijekaplus.sticker.hr/jadranski4/index.m3u8
+zabica1;https://kam.rijekaplus.sticker.hr/zabica1/index.m3u8
+zabica2;https://kam.rijekaplus.sticker.hr/zabica2/index.m3u8
+opatija1;https://kam.cesterijeka.sticker.hr/opatija1/index.m3u8
+opatija2;https://kam.cesterijeka.sticker.hr/opatija2/index.m3u8
+opatija3;https://kam.cesterijeka.sticker.hr/opatija3/index.m3u8
+opatija4;https://kam.cesterijeka.sticker.hr/opatija4/index.m3u8
+k15x;https://kam.rijekaplus.sticker.hr/k15x/index.m3u8
+k16x;https://kam.rijekaplus.sticker.hr/k16x/index.m3u8
+k10x;https://kam.rijekaplus.sticker.hr/k10x/index.m3u8
+orehovica1;https://kam.rijekaplus.sticker.hr/orehovica1/index.m3u8
+orehovica2;https://kam.rijekaplus.sticker.hr/orehovica2/index.m3u8
+orehovica4;https://kam.rijekaplus.sticker.hr/orehovica4/index.m3u8
+orehovica3;https://kam.rijekaplus.sticker.hr/orehovica3/index.m3u8
+CAMERAS
+)
 
-          # id;stream_url
-          cameras="
-          veslarska1;https://kam.rijekaplus.sticker.hr/veslarska1/index.m3u8
-          bacvarska1;https://kam.rijekaplus.sticker.hr/bacvarska1/index.m3u8
-          henckea1;https://kam.rijekaplus.sticker.hr/henckea1/index.m3u8
-          gardbrigade1;https://kam.rijekaplus.sticker.hr/gardbrigade1/index.m3u8
-          jadranski1;https://kam.rijekaplus.sticker.hr/jadranski1/index.m3u8
-          jadranski3;https://kam.rijekaplus.sticker.hr/jadranski3/index.m3u8
-          jadranski360;https://kam.rijekaplus.sticker.hr/jadranski360/index.m3u8
-          jadranski5;https://kam.rijekaplus.sticker.hr/jadranski5/index.m3u8
-          zabica360;https://kam.rijekaplus.sticker.hr/zabica360/index.m3u8
-          jadranski4;https://kam.rijekaplus.sticker.hr/jadranski4/index.m3u8
-          zabica1;https://kam.rijekaplus.sticker.hr/zabica1/index.m3u8
-          zabica2;https://kam.rijekaplus.sticker.hr/zabica2/index.m3u8
-          opatija1;https://kam.cesterijeka.sticker.hr/opatija1/index.m3u8
-          opatija2;https://kam.cesterijeka.sticker.hr/opatija2/index.m3u8
-          opatija3;https://kam.cesterijeka.sticker.hr/opatija3/index.m3u8
-          opatija4;https://kam.cesterijeka.sticker.hr/opatija4/index.m3u8
-          k15x;https://kam.rijekaplus.sticker.hr/k15x/index.m3u8
-          k16x;https://kam.rijekaplus.sticker.hr/k16x/index.m3u8
-          k10x;https://kam.rijekaplus.sticker.hr/k10x/index.m3u8
-          orehovica1;https://kam.rijekaplus.sticker.hr/orehovica1/index.m3u8
-          orehovica2;https://kam.rijekaplus.sticker.hr/orehovica2/index.m3u8
-          orehovica3;https://kam.rijekaplus.sticker.hr/orehovica3/index.m3u8
-          orehovica4;https://kam.rijekaplus.sticker.hr/orehovica4/index.m3u8
-          "
-
+          # procesiraj listu; trimaj eventualne razmake i zadrzi logove po ID-u
           echo "$cameras" | while IFS=';' read -r id url; do
+            # ukloni sve vodeće i završne whitespace znakove (bash param expansion ne trima, pa koristimo printf)
+            id="$(printf '%s' "$id" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+            url="$(printf '%s' "$url" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+
             [ -z "$id" ] && continue
             echo "== $id =="
+            # timeout 30s - prilagodi prema potrebi
             timeout 30 ffmpeg -y -loglevel error \
               -i "$url" \
               -vframes 1 -q:v 4 -vf "scale=560:-1" \
@@ -68,25 +79,31 @@ jobs:
             if [ $rc -eq 0 ] && [ -s "thumbs/${id}.jpg" ]; then
               echo "$id OK"
             else
-              echo "$id FAILED (rc=$rc)"
-              tail -n 30 "thumbs/${id}.log" || true
+              echo "$id FAILED (rc=$rc) - keeping previous image if exists"
+              echo "----- last ffmpeg stderr (tail) for $id -----"
+              tail -n 50 "thumbs/${id}.log" || true
+              echo "---------------------------------------------"
             fi
-            rm -f "thumbs/${id}.log"
           done
 
           echo "Listing thumbs directory:"
           ls -la thumbs || true
 
-      # Uploada direktno na FTP
-      # Nema git commita, nema CDN-a, nema cache pitanja - datoteke
-      - name: Upload thumbnails via FTPS
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./thumbs/
-          server-dir: /slike/
-          protocol: ftps
-          port: 21
-          security: loose
+      - name: Commit and push thumbnails
+        run: |
+          git config user.name "thumb-bot"
+          git config user.email "thumb-bot@users.noreply.github.com"
+
+          # provjeri postoje li .jpg datoteke prije git add
+          if compgen -G "thumbs/*.jpg" > /dev/null; then
+            git add thumbs/*.jpg || true
+            # samo commitaj ako ima promjena
+            if ! git diff --staged --quiet; then
+              git commit -m "Update camera thumbnails [skip ci]"
+              git push
+            else
+              echo "No staged changes to commit"
+            fi
+          else
+            echo "No thumbnails to add, skipping commit/push"
+          fi
