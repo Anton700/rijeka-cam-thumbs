@@ -1,19 +1,17 @@
-name: Generate camera thumbnails
+name: Generate and deploy camera thumbnails
 
 on:
   schedule:
-    # Svakih 10 minuta. GitHub Actions cron
     - cron: '*/10 * * * *'
-  workflow_dispatch: {}   # omogućuje ručno pokretanje s "Run workflow" gumba  
+  workflow_dispatch: {}
   push:
     branches:
       - main
     paths:
       - '.github/workflows/generate-thumbs.yml'
-  
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   thumbs:
@@ -31,9 +29,7 @@ jobs:
           mkdir -p thumbs
           set +e
 
-          ffmpeg -version || true
-
-          # id;stream_url  -- sve kamere kojima treba auto-thumbnail
+          # id;stream_url
           cameras="
           veslarska1;https://kam.rijekaplus.sticker.hr/veslarska1/index.m3u8
           bacvarska1;https://kam.rijekaplus.sticker.hr/bacvarska1/index.m3u8
@@ -56,14 +52,13 @@ jobs:
           k10x;https://kam.rijekaplus.sticker.hr/k10x/index.m3u8
           orehovica1;https://kam.rijekaplus.sticker.hr/orehovica1/index.m3u8
           orehovica2;https://kam.rijekaplus.sticker.hr/orehovica2/index.m3u8
-          orehovica4;https://kam.rijekaplus.sticker.hr/orehovica4/index.m3u8
           orehovica3;https://kam.rijekaplus.sticker.hr/orehovica3/index.m3u8
+          orehovica4;https://kam.rijekaplus.sticker.hr/orehovica4/index.m3u8
           "
 
           echo "$cameras" | while IFS=';' read -r id url; do
             [ -z "$id" ] && continue
             echo "== $id =="
-            # povećani timeout i log stderr u file
             timeout 30 ffmpeg -y -loglevel error \
               -i "$url" \
               -vframes 1 -q:v 4 -vf "scale=560:-1" \
@@ -73,26 +68,24 @@ jobs:
             if [ $rc -eq 0 ] && [ -s "thumbs/${id}.jpg" ]; then
               echo "$id OK"
             else
-              echo "$id FAILED (rc=$rc) - zadržavam staru sliku ako postoji"
-              echo "----- last ffmpeg stderr (tail) for $id -----"
-              tail -n 50 "thumbs/${id}.log" || true
-              echo "---------------------------------------------"
+              echo "$id FAILED (rc=$rc)"
+              tail -n 30 "thumbs/${id}.log" || true
             fi
+            rm -f "thumbs/${id}.log"
           done
 
           echo "Listing thumbs directory:"
           ls -la thumbs || true
 
-      - name: Commit and push thumbnails
-        run: |
-          git config user.name "thumb-bot"
-          git config user.email "thumb-bot@users.noreply.github.com"
-
-          # provjeri postoje li .jpg datoteke prije git add
-          if compgen -G "thumbs/*.jpg" > /dev/null; then
-            git add thumbs/*.jpg
-            git diff --staged --quiet || git commit -m "Update camera thumbnails [skip ci]"
-            git push
-          else
-            echo "No thumbnails to add, skipping commit/push"
-          fi
+      # Uploada direktno na FTP
+      # Nema git commita, nema CDN-a, nema cache pitanja - datoteke
+      - name: Upload thumbnails via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./thumbs/
+          server-dir: /slike/
+          exclude: |
+            **/*.log
