@@ -7,35 +7,40 @@
   <style>
     body { font-family: system-ui, -apple-system, Roboto, "Segoe UI", Arial; margin: 0; padding: 1rem; background:#f7f7f7; color:#111; }
     h1 { margin: 0 0 1rem 0; font-size:1.25rem; }
-    .gallery { display:flex; flex-wrap:wrap; gap:12px; }
-    .item { background:#fff; padding:6px; border-radius:6px; box-shadow:0 1px 3px rgba(0,0,0,.06); width:180px; text-align:center; }
-    .item img { width:100%; height:120px; object-fit:cover; display:block; border-radius:4px; }
-    .caption { font-size:0.85rem; margin-top:6px; word-break:break-all; color:#333; }
-    @media (max-width:420px){ .item { width:46%; } .item img { height:100px; } }
+    /* show each image full-width, no captions */
+    .gallery { display:block; }
+    .item { background:#fff; padding:6px; border-radius:6px; box-shadow:0 1px 3px rgba(0,0,0,.06); margin-bottom:12px; }
+    .item a { display:block; }
+    .item img { width:100%; height:auto; display:block; border-radius:4px; }
+    @media (min-width:1200px){ .item { max-width:1200px; margin-left:auto; margin-right:auto; } }
   </style>
 </head>
 <body>
   <h1>Rijeka cam — thumbs</h1>
   <div class="gallery">
-    <div class="item"><a href="10x.jpg" target="_blank" rel="noopener noreferrer"><img src="10x.jpg" alt="10x.jpg"></a><div class="caption">10x.jpg</div></div>
-    <div class="item"><a href="15x.jpg" target="_blank" rel="noopener noreferrer"><img src="15x.jpg" alt="15x.jpg"></a><div class="caption">15x.jpg</div></div>
-    <div class="item"><a href="16x.jpg" target="_blank" rel="noopener noreferrer"><img src="16x.jpg" alt="16x.jpg"></a><div class="caption">16x.jpg</div></div>
-    <div class="item"><a href="abica1.jpg" target="_blank" rel="noopener noreferrer"><img src="abica1.jpg" alt="abica1.jpg"></a><div class="caption">abica1.jpg</div></div>
-    <div class="item"><a href="abica2.jpg" target="_blank" rel="noopener noreferrer"><img src="abica2.jpg" alt="abica2.jpg"></a><div class="caption">abica2.jpg</div></div>
-    <div class="item"><a href="abica360.jpg" target="_blank" rel="noopener noreferrer"><img src="abica360.jpg" alt="abica360.jpg"></a><div class="caption">abica360.jpg</div></div>
-    <div class="item"><a href="acvarska1.jpg" target="_blank" rel="noopener noreferrer"><img src="acvarska1.jpg" alt="acvarska1.jpg"></a><div class="caption">acvarska1.jpg</div></div>
-    <div class="item"><a href="adranski1.jpg" target="_blank" rel="noopener noreferrer"><img src="adranski1.jpg" alt="adranski1.jpg"></a><div class="caption">adranski1.jpg</div></div>
-    <div class="item"><a href="adranski3.jpg" target="_blank" rel="noopener noreferrer"><img src="adranski3.jpg" alt="adranski3.jpg"></a><div class="caption">adranski3.jpg</div></div>
-    <div class="item"><a href="adranski360.jpg" target="_blank" rel="noopener noreferrer"><img src="adranski360.jpg" alt="adranski360.jpg"></a><div class="caption">adranski360.jpg</div></div>
-    <div class="item"><a href="adranski4.jpg" target="_blank" rel="noopener noreferrer"><img src="adranski4.jpg" alt="adranski4.jpg"></a><div class="caption">adranski4.jpg</div></div>
-    <div class="item"><a href="adranski5.jpg" target="_blank" rel="noopener noreferrer"><img src="adranski5.jpg" alt="adranski5.jpg"></a><div class="caption">adranski5.jpg</div></div>
-    <div class="item"><a href="ardbrigade1.jpg" target="_blank" rel="noopener noreferrer"><img src="ardbrigade1.jpg" alt="ardbrigade1.jpg"></a><div class="caption">ardbrigade1.jpg</div></div>
-    <div class="item"><a href="enckea1.jpg" target="_blank" rel="noopener noreferrer"><img src="enckea1.jpg" alt="enckea1.jpg"></a><div class="caption">enckea1.jpg</div></div>
-    <div class="item"><a href="patija1.jpg" target="_blank" rel="noopener noreferrer"><img src="patija1.jpg" alt="patija1.jpg"></a><div class="caption">patija1.jpg</div></div>
-    <div class="item"><a href="patija2.jpg" target="_blank" rel="noopener noreferrer"><img src="patija2.jpg" alt="patija2.jpg"></a><div class="caption">patija2.jpg</div></div>
-    <div class="item"><a href="patija3.jpg" target="_blank" rel="noopener noreferrer"><img src="patija3.jpg" alt="patija3.jpg"></a><div class="caption">patija3.jpg</div></div>
-    <div class="item"><a href="patija4.jpg" target="_blank" rel="noopener noreferrer"><img src="patija4.jpg" alt="patija4.jpg"></a><div class="caption">patija4.jpg</div></div>
-    <div class="item"><a href="veslarska1.jpg" target="_blank" rel="noopener noreferrer"><img src="veslarska1.jpg" alt="veslarska1.jpg"></a><div class="caption">veslarska1.jpg</div></div>
+    <div class="item"><a href="veslarska1.jpg" target="_blank" rel="noopener noreferrer"><img src="veslarska1.jpg" alt="veslarska1"></a></div>
+    <div class="item"><a href="bacvarska1.jpg" target="_blank" rel="noopener noreferrer"><img src="bacvarska1.jpg" alt="bacvarska1"></a></div>
+    <div class="item"><a href="henckea1.jpg" target="_blank" rel="noopener noreferrer"><img src="henckea1.jpg" alt="henckea1"></a></div>
+    <div class="item"><a href="gardbrigade1.jpg" target="_blank" rel="noopener noreferrer"><img src="gardbrigade1.jpg" alt="gardbrigade1"></a></div>
+    <div class="item"><a href="jadranski1.jpg" target="_blank" rel="noopener noreferrer"><img src="jadranski1.jpg" alt="jadranski1"></a></div>
+    <div class="item"><a href="jadranski3.jpg" target="_blank" rel="noopener noreferrer"><img src="jadranski3.jpg" alt="jadranski3"></a></div>
+    <div class="item"><a href="jadranski360.jpg" target="_blank" rel="noopener noreferrer"><img src="jadranski360.jpg" alt="jadranski360"></a></div>
+    <div class="item"><a href="jadranski5.jpg" target="_blank" rel="noopener noreferrer"><img src="jadranski5.jpg" alt="jadranski5"></a></div>
+    <div class="item"><a href="jadranski4.jpg" target="_blank" rel="noopener noreferrer"><img src="jadranski4.jpg" alt="jadranski4"></a></div>
+    <div class="item"><a href="zabica1.jpg" target="_blank" rel="noopener noreferrer"><img src="zabica1.jpg" alt="zabica1"></a></div>
+    <div class="item"><a href="zabica2.jpg" target="_blank" rel="noopener noreferrer"><img src="zabica2.jpg" alt="zabica2"></a></div>
+    <div class="item"><a href="zabica360.jpg" target="_blank" rel="noopener noreferrer"><img src="zabica360.jpg" alt="zabica360"></a></div>
+    <div class="item"><a href="opatija1.jpg" target="_blank" rel="noopener noreferrer"><img src="opatija1.jpg" alt="opatija1"></a></div>
+    <div class="item"><a href="opatija2.jpg" target="_blank" rel="noopener noreferrer"><img src="opatija2.jpg" alt="opatija2"></a></div>
+    <div class="item"><a href="opatija3.jpg" target="_blank" rel="noopener noreferrer"><img src="opatija3.jpg" alt="opatija3"></a></div>
+    <div class="item"><a href="opatija4.jpg" target="_blank" rel="noopener noreferrer"><img src="opatija4.jpg" alt="opatija4"></a></div>
+    <div class="item"><a href="k10x.jpg" target="_blank" rel="noopener noreferrer"><img src="k10x.jpg" alt="k10x"></a></div>
+    <div class="item"><a href="k15x.jpg" target="_blank" rel="noopener noreferrer"><img src="k15x.jpg" alt="k15x"></a></div>
+    <div class="item"><a href="k16x.jpg" target="_blank" rel="noopener noreferrer"><img src="k16x.jpg" alt="k16x"></a></div>
+    <div class="item"><a href="orehovica1.jpg" target="_blank" rel="noopener noreferrer"><img src="orehovica1.jpg" alt="orehovica1"></a></div>
+    <div class="item"><a href="orehovica2.jpg" target="_blank" rel="noopener noreferrer"><img src="orehovica2.jpg" alt="orehovica2"></a></div>
+    <div class="item"><a href="orehovica3.jpg" target="_blank" rel="noopener noreferrer"><img src="orehovica3.jpg" alt="orehovica3"></a></div>
+    <div class="item"><a href="orehovica4.jpg" target="_blank" rel="noopener noreferrer"><img src="orehovica4.jpg" alt="orehovica4"></a></div>
   </div>
 </body>
 </html>
