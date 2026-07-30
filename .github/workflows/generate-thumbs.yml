@@ -2,7 +2,7 @@ name: Generate camera thumbnails
 
 on:
   schedule:
-    - cron: "*/10 * * * *"
+    - cron: "*/5 * * * *"
   workflow_dispatch:
   push:
     branches:
@@ -118,21 +118,11 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./thumbs/
-          server-dir: /                            # postavi "/" ili "" 
+          server-dir: /slike/                            # postavi "/" ili "" 
           protocol: ftps
           port: 21
           security: loose                          # temporary for cert mismatch; prefer strict or sftp
 
-      # OPTIONAL: small debug step to inspect remote pwd/ls (doesn't print secrets)
-      - name: FTP debug (pwd / ls)
-        if: always()
-        run: |
-          sudo apt-get update && sudo apt-get install -y lftp
-          lftp -u "$FTP_USERNAME","$FTP_PASSWORD" -p 21 -e "set ftp:ssl-force true; set ftp:ssl-protect-data true; set ssl:verify-certificate no; pwd; ls -la; bye" "$FTP_SERVER"
-        env:
-          FTP_SERVER: ${{ secrets.FTP_SERVER }}
-          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
-          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
 
       - name: Commit thumbnails
         shell: bash
