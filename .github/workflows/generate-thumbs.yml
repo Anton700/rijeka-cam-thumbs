@@ -69,6 +69,8 @@ jobs:
 
             echo "📷 ${id}"
 
+            # run ffmpeg but don't let a non-zero exit immediately stop the whole script
+            rc=0
             timeout 30 ffmpeg \
               -hide_banner \
               -loglevel error \
@@ -78,9 +80,8 @@ jobs:
               -q:v 4 \
               -vf scale=560:-1 \
               "thumbs/${id}.jpg" \
-              2>"thumbs/${id}.log"
-
-            rc=$?
+              2>"thumbs/${id}.log" || rc=$?
+            rc=${rc:-0}
 
             if [[ $rc -eq 0 && -s "thumbs/${id}.jpg" ]]; then
               rm -f "thumbs/${id}.log"
