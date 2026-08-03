@@ -5,42 +5,133 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Rijeka cam — thumbs</title>
   <style>
-    body { font-family: system-ui, -apple-system, Roboto, "Segoe UI", Arial; margin: 0; padding: 1rem; background:#f7f7f7; color:#111; }
-    h1 { margin: 0 0 1rem 0; font-size:1.25rem; }
-    /* show each image full-width, no captions */
-    .gallery { display:block; }
-    .item { background:#fff; padding:6px; border-radius:6px; box-shadow:0 1px 3px rgba(0,0,0,.06); margin-bottom:12px; }
-    .item a { display:block; }
-    .item img { width:100%; height:auto; display:block; border-radius:4px; }
-    @media (min-width:1200px){ .item { max-width:1200px; margin-left:auto; margin-right:auto; } }
+    :root{
+      --bg:#0b0c0e; --card:#0f1417; --muted:#9aa3ac; --accent:#1e90ff; --radius:8px;
+    }
+    *{box-sizing:border-box}
+    body { font-family: system-ui, -apple-system, Roboto, "Segoe UI", Arial; margin: 0; padding: 1rem; background:var(--bg); color:#e6eef6; -webkit-font-smoothing:antialiased }
+    .wrap{max-width:1200px;margin:0 auto}
+    header{display:flex;align-items:baseline;gap:1rem;justify-content:space-between;margin-bottom:1rem}
+    h1 { margin: 0; font-size:1.25rem; font-weight:600 }
+    .subtitle{color:var(--muted);font-size:0.95rem}
+
+    .section { margin: 1rem 0 2rem 0 }
+    .section h2{margin:0 0 .75rem 0;font-size:1rem}
+
+    .gallery{display:grid;grid-template-columns:1fr;gap:12px}
+    @media(min-width:700px){ .gallery{grid-template-columns:repeat(2,1fr)} }
+    @media(min-width:1100px){ .gallery{grid-template-columns:repeat(3,1fr)} }
+
+    .item{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:8px;border-radius:var(--radius);box-shadow:0 6px 18px rgba(0,0,0,.6);overflow:hidden;}
+    .item a{display:block;text-decoration:none;color:inherit}
+    .thumb{display:block;width:100%;height:220px;object-fit:cover;border-radius:6px;background:linear-gradient(90deg,#091018,#071018)}
+    .meta{display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-size:0.85rem;color:var(--muted)}
+
+    footer{margin-top:2rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,0.03);color:var(--muted);font-size:0.9rem}
+
+    .section-title{display:flex;align-items:center;gap:.5rem}
+    .badge{background:rgba(255,255,255,0.03);padding:.15rem .5rem;border-radius:999px;font-size:0.8rem;color:var(--muted)}
   </style>
 </head>
 <body>
-  <h1>Rijeka cam — thumbs</h1>
-  <div class="gallery">
-    <div class="item"><a href="veslarska1.jpg" target="_blank" rel="noopener noreferrer"><img src="veslarska1.jpg" alt="veslarska1"></a></div>
-    <div class="item"><a href="bacvarska1.jpg" target="_blank" rel="noopener noreferrer"><img src="bacvarska1.jpg" alt="bacvarska1"></a></div>
-    <div class="item"><a href="henckea1.jpg" target="_blank" rel="noopener noreferrer"><img src="henckea1.jpg" alt="henckea1"></a></div>
-    <div class="item"><a href="gardbrigade1.jpg" target="_blank" rel="noopener noreferrer"><img src="gardbrigade1.jpg" alt="gardbrigade1"></a></div>
-    <div class="item"><a href="jadranski1.jpg" target="_blank" rel="noopener noreferrer"><img src="jadranski1.jpg" alt="jadranski1"></a></div>
-    <div class="item"><a href="jadranski3.jpg" target="_blank" rel="noopener noreferrer"><img src="jadranski3.jpg" alt="jadranski3"></a></div>
-    <div class="item"><a href="jadranski360.jpg" target="_blank" rel="noopener noreferrer"><img src="jadranski360.jpg" alt="jadranski360"></a></div>
-    <div class="item"><a href="jadranski5.jpg" target="_blank" rel="noopener noreferrer"><img src="jadranski5.jpg" alt="jadranski5"></a></div>
-    <div class="item"><a href="jadranski4.jpg" target="_blank" rel="noopener noreferrer"><img src="jadranski4.jpg" alt="jadranski4"></a></div>
-    <div class="item"><a href="zabica1.jpg" target="_blank" rel="noopener noreferrer"><img src="zabica1.jpg" alt="zabica1"></a></div>
-    <div class="item"><a href="zabica2.jpg" target="_blank" rel="noopener noreferrer"><img src="zabica2.jpg" alt="zabica2"></a></div>
-    <div class="item"><a href="zabica360.jpg" target="_blank" rel="noopener noreferrer"><img src="zabica360.jpg" alt="zabica360"></a></div>
-    <div class="item"><a href="opatija1.jpg" target="_blank" rel="noopener noreferrer"><img src="opatija1.jpg" alt="opatija1"></a></div>
-    <div class="item"><a href="opatija2.jpg" target="_blank" rel="noopener noreferrer"><img src="opatija2.jpg" alt="opatija2"></a></div>
-    <div class="item"><a href="opatija3.jpg" target="_blank" rel="noopener noreferrer"><img src="opatija3.jpg" alt="opatija3"></a></div>
-    <div class="item"><a href="opatija4.jpg" target="_blank" rel="noopener noreferrer"><img src="opatija4.jpg" alt="opatija4"></a></div>
-    <div class="item"><a href="k10x.jpg" target="_blank" rel="noopener noreferrer"><img src="k10x.jpg" alt="k10x"></a></div>
-    <div class="item"><a href="k15x.jpg" target="_blank" rel="noopener noreferrer"><img src="k15x.jpg" alt="k15x"></a></div>
-    <div class="item"><a href="k16x.jpg" target="_blank" rel="noopener noreferrer"><img src="k16x.jpg" alt="k16x"></a></div>
-    <div class="item"><a href="orehovica1.jpg" target="_blank" rel="noopener noreferrer"><img src="orehovica1.jpg" alt="orehovica1"></a></div>
-    <div class="item"><a href="orehovica2.jpg" target="_blank" rel="noopener noreferrer"><img src="orehovica2.jpg" alt="orehovica2"></a></div>
-    <div class="item"><a href="orehovica3.jpg" target="_blank" rel="noopener noreferrer"><img src="orehovica3.jpg" alt="orehovica3"></a></div>
-    <div class="item"><a href="orehovica4.jpg" target="_blank" rel="noopener noreferrer"><img src="orehovica4.jpg" alt="orehovica4"></a></div>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>Rijeka cam — thumbs</h1>
+        <div class="subtitle">Mala galerija kamera — trenutne sličice se osvježavaju svake 60s</div>
+      </div>
+      <div class="subtitle">Posljednja promjena: <span id="lastUpdate">—</span></div>
+    </header>
+
+    <section class="section" id="rijeka">
+      <div class="section-title"><h2>Rijeka</h2><span class="badge">Kamera</span></div>
+      <div class="gallery">
+        <div class="item"><a data-base="veslarska1.jpg" href="veslarska1.jpg" target="_blank" rel="noopener noreferrer"><img class="thumb" alt="veslarska1" src="veslarska1.jpg"></a>
+          <div class="meta"><span>Veslarska</span><span class="muted">veslarska1.jpg</span></div></div>
+        <div class="item"><a data-base="bacvarska1.jpg" href="bacvarska1.jpg" target="_blank" rel="noopener noreferrer"><img class="thumb" alt="bacvarska1" src="bacvarska1.jpg"></a>
+          <div class="meta"><span>Bačvarska</span><span class="muted">bacvarska1.jpg</span></div></div>
+        <div class="item"><a data-base="henckea1.jpg" href="henckea1.jpg" target="_blank" rel="noopener noreferrer"><img class="thumb" alt="henckea1" src="henckea1.jpg"></a>
+          <div class="meta"><span>Henckea</span><span class="muted">henckea1.jpg</span></div></div>
+        <div class="item"><a data-base="gardbrigade1.jpg" href="gardbrigade1.jpg" target="_blank" rel="noopener noreferrer"><img class="thumb" alt="gardbrigade1" src="gardbrigade1.jpg"></a>
+          <div class="meta"><span>Gardbrigade</span><span class="muted">gardbrigade1.jpg</span></div></div>
+        <div class="item"><a data-base="jadranski1.jpg" href="jadranski1.jpg" target="_blank" rel="noopener noreferrer"><img class="thumb" alt="jadranski1" src="jadranski1.jpg"></a>
+          <div class="meta"><span>Jadranski 1</span><span class="muted">jadranski1.jpg</span></div></div>
+        <div class="item"><a data-base="jadranski3.jpg" href="jadranski3.jpg" target="_blank" rel="noopener noreferrer"><img class="thumb" alt="jadranski3" src="jadranski3.jpg"></a>
+          <div class="meta"><span>Jadranski 3</span><span class="muted">jadranski3.jpg</span></div></div>
+        <div class="item"><a data-base="jadranski360.jpg" href="jadranski360.jpg" target="_blank" rel="noopener noreferrer"><img class="thumb" alt="jadranski360" src="jadranski360.jpg"></a>
+          <div class="meta"><span>Jadranski 360</span><span class="muted">jadranski360.jpg</span></div></div>
+        <div class="item"><a data-base="jadranski5.jpg" href="jadranski5.jpg" target="_blank" rel="noopener noreferrer"><img class="thumb" alt="jadranski5" src="jadranski5.jpg"></a>
+          <div class="meta"><span>Jadranski 5</span><span class="muted">jadranski5.jpg</span></div></div>
+        <div class="item"><a data-base="jadranski4.jpg" href="jadranski4.jpg" target="_blank" rel="noopener noreferrer"><img class="thumb" alt="jadranski4" src="jadranski4.jpg"></a>
+          <div class="meta"><span>Jadranski 4</span><span class="muted">jadranski4.jpg</span></div></div>
+        <div class="item"><a data-base="zabica1.jpg" href="zabica1.jpg" target="_blank" rel="noopener noreferrer"><img class="thumb" alt="zabica1" src="zabica1.jpg"></a>
+          <div class="meta"><span>Žabica 1</span><span class="muted">zabica1.jpg</span></div></div>
+        <div class="item"><a data-base="zabica2.jpg" href="zabica2.jpg" target="_blank" rel="noopener noreferrer"><img class="thumb" alt="zabica2" src="zabica2.jpg"></a>
+          <div class="meta"><span>Žabica 2</span><span class="muted">zabica2.jpg</span></div></div>
+        <div class="item"><a data-base="zabica360.jpg" href="zabica360.jpg" target="_blank" rel="noopener noreferrer"><img class="thumb" alt="zabica360" src="zabica360.jpg"></a>
+          <div class="meta"><span>Žabica 360</span><span class="muted">zabica360.jpg</span></div></div>
+
+        <div class="item"><a data-base="k10x.jpg" href="k10x.jpg" target="_blank" rel="noopener noreferrer"><img class="thumb" alt="k10x" src="k10x.jpg"></a>
+          <div class="meta"><span>K10X</span><span class="muted">k10x.jpg</span></div></div>
+        <div class="item"><a data-base="k15x.jpg" href="k15x.jpg" target="_blank" rel="noopener noreferrer"><img class="thumb" alt="k15x" src="k15x.jpg"></a>
+          <div class="meta"><span>K15X</span><span class="muted">k15x.jpg</span></div></div>
+        <div class="item"><a data-base="k16x.jpg" href="k16x.jpg" target="_blank" rel="noopener noreferrer"><img class="thumb" alt="k16x" src="k16x.jpg"></a>
+          <div class="meta"><span>K16X</span><span class="muted">k16x.jpg</span></div></div>
+        <div class="item"><a data-base="orehovica1.jpg" href="orehovica1.jpg" target="_blank" rel="noopener noreferrer"><img class="thumb" alt="orehovica1" src="orehovica1.jpg"></a>
+          <div class="meta"><span>Orehovica 1</span><span class="muted">orehovica1.jpg</span></div></div>
+        <div class="item"><a data-base="orehovica2.jpg" href="orehovica2.jpg" target="_blank" rel="noopener noreferrer"><img class="thumb" alt="orehovica2" src="orehovica2.jpg"></a>
+          <div class="meta"><span>Orehovica 2</span><span class="muted">orehovica2.jpg</span></div></div>
+        <div class="item"><a data-base="orehovica3.jpg" href="orehovica3.jpg" target="_blank" rel="noopener noreferrer"><img class="thumb" alt="orehovica3" src="orehovica3.jpg"></a>
+          <div class="meta"><span>Orehovica 3</span><span class="muted">orehovica3.jpg</span></div></div>
+        <div class="item"><a data-base="orehovica4.jpg" href="orehovica4.jpg" target="_blank" rel="noopener noreferrer"><img class="thumb" alt="orehovica4" src="orehovica4.jpg"></a>
+          <div class="meta"><span>Orehovica 4</span><span class="muted">orehovica4.jpg</span></div></div>
+      </div>
+    </section>
+
+    <section class="section" id="opatija">
+      <div class="section-title"><h2>Opatija</h2><span class="badge">Opatija</span></div>
+      <div class="gallery">
+        <div class="item"><a data-base="opatija1.jpg" href="opatija1.jpg" target="_blank" rel="noopener noreferrer"><img class="thumb" alt="opatija1" src="opatija1.jpg"></a>
+          <div class="meta"><span>Opatija 1</span><span class="muted">opatija1.jpg</span></div></div>
+        <div class="item"><a data-base="opatija2.jpg" href="opatija2.jpg" target="_blank" rel="noopener noreferrer"><img class="thumb" alt="opatija2" src="opatija2.jpg"></a>
+          <div class="meta"><span>Opatija 2</span><span class="muted">opatija2.jpg</span></div></div>
+        <div class="item"><a data-base="opatija3.jpg" href="opatija3.jpg" target="_blank" rel="noopener noreferrer"><img class="thumb" alt="opatija3" src="opatija3.jpg"></a>
+          <div class="meta"><span>Opatija 3</span><span class="muted">opatija3.jpg</span></div></div>
+        <div class="item"><a data-base="opatija4.jpg" href="opatija4.jpg" target="_blank" rel="noopener noreferrer"><img class="thumb" alt="opatija4" src="opatija4.jpg"></a>
+          <div class="meta"><span>Opatija 4</span><span class="muted">opatija4.jpg</span></div></div>
+      </div>
+    </section>
+
+    <footer>
+      <div>Slike se osvježavaju svakih 60s (stranica se ne osvježava automatski).</div>
+      <div style="margin-top:.5rem;color:var(--muted);font-size:.85rem">Napomena: da bi se izbjeglo nepotrebno učitavanje, skripta osvježava samo slike dodavanjem query parametra <code>?v=...</code> koji se mijenja svake minute.</div>
+    </footer>
   </div>
+
+  <script>
+    (function(){
+      // version changes once per minute -> cache window ~60s
+      function version(){return Math.floor(Date.now()/60000)}
+      function updateAll(){
+        var v = version();
+        document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString();
+        document.querySelectorAll('[data-base]').forEach(function(a){
+          var base = a.getAttribute('data-base');
+          var url = base + '?v=' + v;
+          var img = a.querySelector('img');
+          // only update if changed (avoid re-assigning same src)
+          if(img && img.src.indexOf(url)===-1){
+            img.src = url;
+            a.href = url; // open current version when clicked
+          }
+        })
+      }
+      // initial update
+      updateAll();
+      // update every full 60s (aligned)
+      var msToNext = 60000 - (Date.now() % 60000) + 50; // slight cushion
+      setTimeout(function(){ updateAll(); setInterval(updateAll, 60000); }, msToNext);
+    })();
+  </script>
 </body>
 </html>
