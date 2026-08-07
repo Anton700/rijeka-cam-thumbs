@@ -152,7 +152,7 @@ jobs:
           security: loose
 
       - name: Fallback upload via lftp (retry) if FTPS failed
-        if: steps.ftps_upload.outcome != 'success' && (secrets.FTP_SERVER != '')
+        if: ${{ steps.ftps_upload.outcome != 'success' && secrets.FTP_SERVER != '' }}
         run: |
           set -euo pipefail
           apt-get update -y
