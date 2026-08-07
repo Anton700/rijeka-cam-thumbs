@@ -1,3 +1,5 @@
+# Fixed workflow: map secrets into env, use env.* in if: expressions,
+# ensure all expressions use ${{ ... }} where required.
 name: Generate camera thumbnails
 
 on:
@@ -16,6 +18,12 @@ permissions:
 jobs:
   thumbs:
     runs-on: ubuntu-latest
+
+    # Map secrets into env to avoid parser errors using secrets.* in if expressions
+    env:
+      FTP_SERVER: ${{ secrets.FTP_SERVER }}
+      FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+      FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
 
     steps:
       - name: Checkout repository
@@ -129,22 +137,22 @@ jobs:
           apt-get update -y
           apt-get install -y netcat-openbsd openssl lftp || true
           echo "Resolve:"
-          nslookup ${{ secrets.FTP_SERVER }} || true
+          nslookup "$FTP_SERVER" || true
           echo "Check port 21 and 22:"
-          nc -vz ${{ secrets.FTP_SERVER }} 21 || true
-          nc -vz ${{ secrets.FTP_SERVER }} 22 || true
+          nc -vz "$FTP_SERVER" 21 || true
+          nc -vz "$FTP_SERVER" 22 || true
           echo "Try FTPS handshake (may fail for non-FTPS servers):"
-          timeout 5 openssl s_client -connect ${{ secrets.FTP_SERVER }}:21 -starttls ftp </dev/null || true
+          timeout 5 openssl s_client -connect "${FTP_SERVER}:21" -starttls ftp </dev/null || true
 
       - name: Upload thumbnails via FTPS (non-fatal, primary)
-        if: ${{ secrets.FTP_SERVER != '' && secrets.FTP_USERNAME != '' && secrets.FTP_PASSWORD != '' }}
+        if: ${{ env.FTP_SERVER != '' && env.FTP_USERNAME != '' && env.FTP_PASSWORD != '' }}
         continue-on-error: true
         id: ftps_upload
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
+          server: ${{ env.FTP_SERVER }}
+          username: ${{ env.FTP_USERNAME }}
+          password: ${{ env.FTP_PASSWORD }}
           local-dir: ./thumbs/
           server-dir: /slike/
           protocol: ftps
@@ -152,16 +160,16 @@ jobs:
           security: loose
 
       - name: Fallback upload via lftp (retry) if FTPS failed
-        if: ${{ steps.ftps_upload.outcome != 'success' && secrets.FTP_SERVER != '' }}
+        if: ${{ steps.ftps_upload.outcome != 'success' && env.FTP_SERVER != '' }}
         run: |
           set -euo pipefail
           apt-get update -y
-          apt-get install -y lftp || exit 0
-          HOST="${{ secrets.FTP_SERVER }}"
-          USER="${{ secrets.FTP_USERNAME }}"
-          PASS="${{ secrets.FTP_PASSWORD }}"
+          apt-get install -y lftp || true
+          HOST="$FTP_SERVER"
+          USER="$FTP_USERNAME"
+          PASS="$FTP_PASSWORD"
           TARGET="/slike"
-          # pokušaj do 5 puta, 15s pauza
+          # attempt up to 5 times, 15s pause
           for i in 1 2 3 4 5; do
             echo "lftp attempt $i..."
             lftp -u "$USER","$PASS" -p 21 "$HOST" -e "\
