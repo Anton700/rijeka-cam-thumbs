@@ -20,6 +20,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 0
 
       - name: Install FFmpeg
         run: |
@@ -27,6 +30,15 @@ jobs:
             sudo apt-get update
             sudo apt-get install -y ffmpeg
           fi
+
+      - name: Diagnostic info
+        run: |
+          echo "Runner: $(uname -a)"
+          echo "ffmpeg:"
+          ffmpeg -version || true
+          echo "Which ffmpeg: $(which ffmpeg || true)"
+          echo "Disk space:"
+          df -h .
 
       - name: Generate thumbnails
         shell: bash
@@ -90,7 +102,9 @@ jobs:
               echo "❌ ${id} (rc=${rc})"
 
               if [[ -f "thumbs/${id}.log" ]]; then
-                tail -20 "thumbs/${id}.log"
+                echo "---- last 40 lines of thumbs/${id}.log ----"
+                tail -40 "thumbs/${id}.log"
+                echo "-----------------------------------------"
               fi
             fi
 
@@ -110,21 +124,74 @@ jobs:
           echo "Generated files:"
           ls -lh thumbs
 
-      - name: Upload thumbnails via FTPS
-        if: always()
+      - name: Test FTP/SFTP connectivity (diagnostics)
+        run: |
+          apt-get update -y
+          apt-get install -y netcat-openbsd openssl lftp || true
+          echo "Resolve:"
+          nslookup ${{ secrets.FTP_SERVER }} || true
+          echo "Check port 21 and 22:"
+          nc -vz ${{ secrets.FTP_SERVER }} 21 || true
+          nc -vz ${{ secrets.FTP_SERVER }} 22 || true
+          echo "Try FTPS handshake (may fail for non-FTPS servers):"
+          timeout 5 openssl s_client -connect ${{ secrets.FTP_SERVER }}:21 -starttls ftp </dev/null || true
+
+      - name: Upload thumbnails via FTPS (non-fatal, primary)
+        if: ${{ secrets.FTP_SERVER != '' && secrets.FTP_USERNAME != '' && secrets.FTP_PASSWORD != '' }}
+        continue-on-error: true
+        id: ftps_upload
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./thumbs/
-          server-dir: /slike/                            # postavi "/" ili "" 
+          server-dir: /slike/
           protocol: ftps
           port: 21
-          security: loose                          # temporary for cert mismatch; prefer strict or sftp
+          security: loose
 
+      - name: Fallback upload via lftp (retry) if FTPS failed
+        if: steps.ftps_upload.outcome != 'success' && (secrets.FTP_SERVER != '')
+        run: |
+          set -euo pipefail
+          apt-get update -y
+          apt-get install -y lftp || exit 0
+          HOST="${{ secrets.FTP_SERVER }}"
+          USER="${{ secrets.FTP_USERNAME }}"
+          PASS="${{ secrets.FTP_PASSWORD }}"
+          TARGET="/slike"
+          # pokušaj do 5 puta, 15s pauza
+          for i in 1 2 3 4 5; do
+            echo "lftp attempt $i..."
+            lftp -u "$USER","$PASS" -p 21 "$HOST" -e "\
+              set ftp:passive-mode true; \
+              set ftp:ssl-force true; \
+              set ftp:ssl-protect-data true; \
+              mirror -R --parallel=2 --verbose ./thumbs $TARGET; \
+              bye" && { echo 'lftp upload succeeded'; exit 0; }
+            echo "lftp attempt $i failed, sleeping..."
+            sleep 15
+          done
+          echo "All lftp attempts failed"
+          exit 1
+
+      - name: Upload generated thumbs (always)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: thumbs
+          path: thumbs/
+
+      - name: Upload logs (only on failure)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: thumbs-logs
+          path: thumbs/*.log
 
       - name: Commit thumbnails
+        if: success()
         shell: bash
         run: |
 
@@ -138,5 +205,5 @@ jobs:
             exit 0
           fi
 
-          git commit -m "Update camera thumbnails [skip ci]"
+          git commit -m "Update camera thumbnails [skip ci]" || ( echo "git commit failed" && exit 1 )
           git push
