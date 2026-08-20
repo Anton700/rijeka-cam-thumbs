@@ -152,19 +152,7 @@ jobs:
           
           for i in 1 2 3 4 5; do
             echo "lftp attempt $i..."
-            if lftp -u "$USER","$PASS" -p 21 "$HOST" <<EOF
-          set ftp:passive-mode true
-          set ftp:ssl-force true
-          set ftp:ssl-protect-data true
-          set ftp:connect-timeout 15
-          set net:timeout 15
-          mirror -R --parallel=2 --verbose ./thumbs $TARGET
-          bye
-EOF
-            then
-              echo 'lftp upload succeeded'
-              exit 0
-            fi
+            lftp -u "$USER","$PASS" -p 21 "$HOST" -e "set ftp:passive-mode true; set ftp:ssl-force true; set ftp:ssl-protect-data true; set ftp:connect-timeout 15; set net:timeout 15; mirror -R --parallel=2 --verbose ./thumbs $TARGET; bye" && echo 'lftp upload succeeded' && exit 0 || true
             echo "lftp attempt $i failed, sleeping..."
             sleep $((i * 5))
           done
@@ -177,7 +165,7 @@ EOF
         with:
           name: thumbs
           path: thumbs/
-          
+
       - name: Upload logs (only on failure)
         if: failure()
         uses: actions/upload-artifact@v4
