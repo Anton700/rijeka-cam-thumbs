@@ -10,6 +10,10 @@ on:
     paths:
       - ".github/workflows/generate-thumbs.yml"
 
+concurrency:
+  group: thumbs-generation
+  cancel-in-progress: true
+
 permissions:
   contents: write
 
@@ -17,15 +21,25 @@ jobs:
   thumbs:
     runs-on: ubuntu-latest
 
+    env:
+      FTP_SERVER: ${{ secrets.FTP_SERVER }}
+      FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+      FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: true
 
+      - name: Free disk space
+        uses: jlumbroso/free-disk-space@main
+        
       - name: Install FFmpeg
         run: |
           if ! command -v ffmpeg >/dev/null 2>&1; then
             sudo apt-get update
-            sudo apt-get install -y ffmpeg
+            sudo apt-get install -y --no-install-recommends ffmpeg
           fi
 
       - name: Generate thumbnails
@@ -69,7 +83,6 @@ jobs:
 
             echo "📷 ${id}"
 
-            # run ffmpeg but don't let a non-zero exit immediately stop the whole script
             rc=0
             timeout 30 ffmpeg \
               -hide_banner \
@@ -110,21 +123,70 @@ jobs:
           echo "Generated files:"
           ls -lh thumbs
 
-      - name: Upload thumbnails via FTPS
-        if: always()
+      - name: Upload thumbnails via FTPS (non-fatal, primary)
+        if: ${{ env.FTP_SERVER != '' && env.FTP_USERNAME != '' && env.FTP_PASSWORD != '' }}
+        continue-on-error: true
+        id: ftps_upload
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
+          server: ${{ env.FTP_SERVER }}
+          username: ${{ env.FTP_USERNAME }}
+          password: ${{ env.FTP_PASSWORD }}
           local-dir: ./thumbs/
-          server-dir: /slike/                            # postavi "/" ili "" 
+          server-dir: /slike/
           protocol: ftps
           port: 21
-          security: loose                          # temporary for cert mismatch; prefer strict or sftp
+          security: loose
+          timeout: 60000
 
+      - name: Fallback upload via lftp (retry) if FTPS failed
+        if: ${{ steps.ftps_upload.outcome != 'success' && env.FTP_SERVER != '' }}
+        run: |
+          set -euo pipefail
+          apt-get update -y
+          apt-get install -y lftp || true
+          HOST="$FTP_SERVER"
+          USER="$FTP_USERNAME"
+          PASS="$FTP_PASSWORD"
+          TARGET="/slike"
+          
+          for i in 1 2 3 4 5; do
+            echo "lftp attempt $i..."
+            if lftp -u "$USER","$PASS" -p 21 "$HOST" <<EOF
+          set ftp:passive-mode true
+          set ftp:ssl-force true
+          set ftp:ssl-protect-data true
+          set ftp:connect-timeout 15
+          set net:timeout 15
+          mirror -R --parallel=2 --verbose ./thumbs $TARGET
+          bye
+EOF
+            then
+              echo 'lftp upload succeeded'
+              exit 0
+            fi
+            echo "lftp attempt $i failed, sleeping..."
+            sleep $((i * 5))
+          done
+          echo "All lftp attempts failed"
+          exit 1
+
+      - name: Upload generated thumbs (always)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: thumbs
+          path: thumbs/
+
+      - name: Upload logs (only on failure)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: thumbs-logs
+          path: thumbs/*.log
 
       - name: Commit thumbnails
+        if: success()
         shell: bash
         run: |
 
