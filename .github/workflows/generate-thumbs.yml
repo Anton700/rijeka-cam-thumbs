@@ -177,7 +177,7 @@ EOF
         with:
           name: thumbs
           path: thumbs/
-
+          
       - name: Upload logs (only on failure)
         if: failure()
         uses: actions/upload-artifact@v4
