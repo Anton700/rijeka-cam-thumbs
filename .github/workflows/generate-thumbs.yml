@@ -31,9 +31,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           persist-credentials: true
-
-      - name: Free disk space
-        uses: jlumbroso/free-disk-space@main
         
       - name: Install FFmpeg
         run: |
