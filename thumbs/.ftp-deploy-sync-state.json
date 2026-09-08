@@ -1,13 +1,13 @@
 {
     "description": "DO NOT DELETE THIS FILE. This file is used to keep track of which files have been synced in the most recent deployment. If you delete this file a resync will need to be done (which can take a while) - read more: https://github.com/SamKirkland/FTP-Deploy-Action",
     "version": "1.0.0",
-    "generatedTime": 1788852818114,
+    "generatedTime": 1788853293082,
     "data": [
         {
             "type": "file",
             "name": ".ftp-deploy-sync-state.json",
             "size": 13510,
-            "hash": "c3df697f95207bba077c48d9d8a14f543243bda1669961fe906686429e958c70"
+            "hash": "bd3ae004f715686037ef0c372a60181429935716b8f0a5c3851d5b6c3a703d1e"
         },
         {
             "type": "file",
@@ -71,15 +71,15 @@
         },
         {
             "type": "file",
-            "name": "ardbrigade1.jpg",
-            "size": 45988,
-            "hash": "5866b661a8c33fc943cfcaa73199d869aa043c76d614c0bc062a6294bca779d9"
-        },
-        {
-            "type": "file",
             "name": "adranski5.jpg",
             "size": 39863,
             "hash": "5b300c840f903ab1e98484be06f6f4dacf26d09237b71f6bd43fcca7a8270735"
+        },
+        {
+            "type": "file",
+            "name": "ardbrigade1.jpg",
+            "size": 45988,
+            "hash": "5866b661a8c33fc943cfcaa73199d869aa043c76d614c0bc062a6294bca779d9"
         },
         {
             "type": "file",
@@ -91,13 +91,7 @@
             "type": "file",
             "name": "bacvarska1.log",
             "size": 236,
-            "hash": "bf70254b66daa16b36d0d4d881f0929ba3c4d763bb1ac74efdf2bf15563c9e54"
-        },
-        {
-            "type": "file",
-            "name": "gardbrigade1.jpg",
-            "size": 44829,
-            "hash": "a7ad26bebc2b102ea654ad9b3c074cc15609fcb6763bd8cd964d22f2d7a131ed"
+            "hash": "bf5d52a687f67c5f8566e009de0c6404ad9afeea14a118d695496adbbfbbde66"
         },
         {
             "type": "file",
@@ -107,9 +101,15 @@
         },
         {
             "type": "file",
+            "name": "gardbrigade1.jpg",
+            "size": 44829,
+            "hash": "a7ad26bebc2b102ea654ad9b3c074cc15609fcb6763bd8cd964d22f2d7a131ed"
+        },
+        {
+            "type": "file",
             "name": "gardbrigade1.log",
             "size": 238,
-            "hash": "f4d4b3424741764f8d5ae302f0989bcac6daeb542116c2a9ce53eb4df385120c"
+            "hash": "176e3a75002423c501cfd649f5170c1eb038d184f416f4ce7d3f6686733a3205"
         },
         {
             "type": "file",
@@ -121,7 +121,7 @@
             "type": "file",
             "name": "henckea1.log",
             "size": 234,
-            "hash": "aba21b565684c3b4fdcab0f0454824dc0b7a47a83b9dfaac8680222663d7536f"
+            "hash": "9eb662d2a161bf6125983360b683d0351ae3b84b65ada3c3d1c13750f00b599e"
         },
         {
             "type": "file",
@@ -139,7 +139,7 @@
             "type": "file",
             "name": "jadranski1.log",
             "size": 236,
-            "hash": "2ce451cff9dd1edebef66fcea34046c4ac0b6587e71dec2b3f125c191345b969"
+            "hash": "35a44c5ffd628cdcfa647c004a11b13499705ca4e9c424a4eb62f187774adca7"
         },
         {
             "type": "file",
@@ -151,7 +151,7 @@
             "type": "file",
             "name": "jadranski3.log",
             "size": 236,
-            "hash": "8c28cdf7c8d97c62971c9d351edc64c9eba132f7b79fcfe97cb5974791cbee31"
+            "hash": "450e49cf2b8e64f1d75b62fa1af7c58ec492e6cc80f00efdbd4aa0a8694e2cc6"
         },
         {
             "type": "file",
@@ -163,7 +163,7 @@
             "type": "file",
             "name": "jadranski360.log",
             "size": 238,
-            "hash": "6db3e61342c8d6ffaeb488a8353d193acc1ff08234be2f88867c3383f295c9e9"
+            "hash": "c290bfced7608be2366b3bed6b0a5c240b20744a7f89e15ebe47eb5ae60e1a38"
         },
         {
             "type": "file",
@@ -175,7 +175,7 @@
             "type": "file",
             "name": "jadranski4.log",
             "size": 236,
-            "hash": "11fdb2a4c91f9b428750998588a1b3a7504025851c03aad1ce788793b0e6510d"
+            "hash": "1eaa51d5434f3bc4505cb9ad5a5420fba75f728f364eedcf9f81ba81886549c1"
         },
         {
             "type": "file",
@@ -187,19 +187,25 @@
             "type": "file",
             "name": "jadranski5.log",
             "size": 236,
-            "hash": "3b566affcfa9949c0672e64a9c7b481d21252ce430983bc40c64f1b50b4d4050"
+            "hash": "706ee795e4b4153743dca4917600ff29a1a74ff2b21d233093f62c897a6f36c9"
         },
         {
             "type": "file",
             "name": "k10x.jpg",
-            "size": 67479,
-            "hash": "a87b4d60cb6a3cc831224e751cc078c026fcb258da42276d43220d405410ebce"
+            "size": 73777,
+            "hash": "3354cccd3453f1758cfac1d76325eb37e0402c561c99f71a9fafc52a38b62487"
         },
         {
             "type": "file",
             "name": "k15x.jpg",
-            "size": 30179,
-            "hash": "97a9210d1954cf5f24731edb358ed096d7d6951b2019ba2f2b16feb7facdea15"
+            "size": 30434,
+            "hash": "68ba0e123f43b12c30f07b636ea4dbf67dbdeda2347dc46ff9d68a7af67c934b"
+        },
+        {
+            "type": "file",
+            "name": "k16x.jpg",
+            "size": 24163,
+            "hash": "3d01c9c83f2f7589040ec7822e04838dc79c9dc2281195c6f28fe01507b7bf54"
         },
         {
             "type": "file",
@@ -209,15 +215,9 @@
         },
         {
             "type": "file",
-            "name": "k16x.jpg",
-            "size": 24559,
-            "hash": "6bf9de946973d94b6a1198d499921d8f5d8d8536a0a701f8eb011c305edb709f"
-        },
-        {
-            "type": "file",
             "name": "opatija1.log",
             "size": 235,
-            "hash": "a019a543dfccfd8e8786f5983ebbd888a5dff52c8a799836158cee5f60327254"
+            "hash": "2ad8367eae9eee8561d2e365c1c39cde4c346332e4e9db00b17770bde3b27dc9"
         },
         {
             "type": "file",
@@ -229,19 +229,19 @@
             "type": "file",
             "name": "opatija2.log",
             "size": 235,
-            "hash": "232112e2f00cdb1d3a057d672a622ae8c766c80e45e87dc13c33dbc2f69c00f9"
+            "hash": "0ab74bd5fc0db2fa0722735b3517d312de78420530714c7e3607c0c3c6cc1177"
+        },
+        {
+            "type": "file",
+            "name": "opatija3.log",
+            "size": 235,
+            "hash": "85a4bd0f13d4e11c1e4c71b1d8284fa007193fb1569ceb25063d11a361acd7f0"
         },
         {
             "type": "file",
             "name": "opatija3.jpg",
             "size": 20736,
             "hash": "f2bdd278caa167075aa735c7c65ed0d21ace48d4abe859ea66e1f2f8625d8a6d"
-        },
-        {
-            "type": "file",
-            "name": "opatija3.log",
-            "size": 235,
-            "hash": "9850a40fd758c68dddc2c04b652ef8e58bb813c7d790dd3a6fedc0c67618f6e0"
         },
         {
             "type": "file",
@@ -253,7 +253,7 @@
             "type": "file",
             "name": "opatija4.log",
             "size": 235,
-            "hash": "b5752aaaad0b66c754cbd67454349dedab772d4784e7e07144fa269c687d4696"
+            "hash": "d25af210b3466434e666c4e7eb586be4528b7306a59b53bddec152f8a3b9914d"
         },
         {
             "type": "file",
@@ -265,7 +265,7 @@
             "type": "file",
             "name": "orehovica1.log",
             "size": 236,
-            "hash": "2af065e67fddd4ce6940e57e93d42751834d1b9cdf2e1856781414b2c9591518"
+            "hash": "f2b0160b9a7b81485c01abb29e93cdf275791f66f41b2046a9f3698c257e407e"
         },
         {
             "type": "file",
@@ -277,7 +277,7 @@
             "type": "file",
             "name": "orehovica2.log",
             "size": 236,
-            "hash": "12a9145178e341ea170d2f2fe5a9ecb66597121571ebb8da45bdfdfff947630b"
+            "hash": "8c08ced5d57fde47934f4dd5372ba8bc2504dfe0b9ca3219f111c3f73f38d922"
         },
         {
             "type": "file",
@@ -289,7 +289,7 @@
             "type": "file",
             "name": "orehovica3.log",
             "size": 236,
-            "hash": "172db6470c886e50acc70473c1d2828820f174765b84c47ee24728bd901ff676"
+            "hash": "67dbb7786b8f50149a7c0bd6eaef05c172882847243e61f471d7d13e7bfdadf0"
         },
         {
             "type": "file",
@@ -301,7 +301,7 @@
             "type": "file",
             "name": "orehovica4.log",
             "size": 236,
-            "hash": "b1642eab28f375cc1627e6a1944b6a75a68bedabb3d98be9001fc00a7ad068f4"
+            "hash": "f1855bb676087217b780e73dcf82881878f0ee15032d82de1b6a65919a9d12ac"
         },
         {
             "type": "file",
@@ -335,15 +335,15 @@
         },
         {
             "type": "file",
-            "name": "rehovica3.jpg",
-            "size": 24293,
-            "hash": "5433d9e46e74e254abf9e3427ce1c27d4b2c699f61a4437a83e31aec4d887b8a"
-        },
-        {
-            "type": "file",
             "name": "rehovica2.jpg",
             "size": 22509,
             "hash": "ec9af9e0a3e380d5bfe3981f7e81c3c4640a34e6040672a4ec33f7b153d26efe"
+        },
+        {
+            "type": "file",
+            "name": "rehovica3.jpg",
+            "size": 24293,
+            "hash": "5433d9e46e74e254abf9e3427ce1c27d4b2c699f61a4437a83e31aec4d887b8a"
         },
         {
             "type": "file",
@@ -361,7 +361,7 @@
             "type": "file",
             "name": "veslarska1.log",
             "size": 236,
-            "hash": "d42f89d07357490a49e067e1e627cc538b68c3f59bdbe3a78fc747417e4e99c7"
+            "hash": "19561f0596236adc8e2361a71975977ca40137b4726340e9e37d7a18845843d6"
         },
         {
             "type": "file",
@@ -373,7 +373,7 @@
             "type": "file",
             "name": "zabica1.log",
             "size": 233,
-            "hash": "55b566b00b022785d53304146831bc14baf83d2aa7655e6c2133dc341dcb1602"
+            "hash": "5289316136c2b31e624a59f27fe892500cd3573d589b4cd485d1f0d1b1359bad"
         },
         {
             "type": "file",
@@ -383,21 +383,21 @@
         },
         {
             "type": "file",
-            "name": "zabica2.log",
-            "size": 233,
-            "hash": "85c698fb1be474e865b147f34c96c3e3468ff43040e0f8c0570fb6ecc1c9e048"
-        },
-        {
-            "type": "file",
             "name": "zabica360.jpg",
             "size": 37589,
             "hash": "3ca023086f8f94b5440a34d64926a01bdd7517d86097ee151bbeefba1a870929"
         },
         {
             "type": "file",
+            "name": "zabica2.log",
+            "size": 233,
+            "hash": "6b7ccb7877b2662dc8d741c33434288d1d6769ca4d636baa27f738c3e4a5f8c6"
+        },
+        {
+            "type": "file",
             "name": "zabica360.log",
             "size": 235,
-            "hash": "c88eca190e2847813d08608856aa32805d2cabee6aa539fa73755dc3e87e157c"
+            "hash": "fea6af006e1db9af96160cb7f7eb93e7446c33faa44cd3b5091a231e341b32d9"
         }
     ]
 }
