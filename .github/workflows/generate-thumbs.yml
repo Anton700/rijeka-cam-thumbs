@@ -48,29 +48,15 @@ jobs:
           mkdir -p thumbs
 
           cameras=(
-          "veslarska1;https://kam.rijekaplus.sticker.hr/veslarska1/index.m3u8"
-          "bacvarska1;https://kam.rijekaplus.sticker.hr/bacvarska1/index.m3u8"
-          "henckea1;https://kam.rijekaplus.sticker.hr/henckea1/index.m3u8"
-          "gardbrigade1;https://kam.rijekaplus.sticker.hr/gardbrigade1/index.m3u8"
-          "jadranski1;https://kam.rijekaplus.sticker.hr/jadranski1/index.m3u8"
-          "jadranski3;https://kam.rijekaplus.sticker.hr/jadranski3/index.m3u8"
-          "jadranski360;https://kam.rijekaplus.sticker.hr/jadranski360/index.m3u8"
-          "jadranski5;https://kam.rijekaplus.sticker.hr/jadranski5/index.m3u8"
-          "jadranski4;https://kam.rijekaplus.sticker.hr/jadranski4/index.m3u8"
-          "zabica1;https://kam.rijekaplus.sticker.hr/zabica1/index.m3u8"
-          "zabica2;https://kam.rijekaplus.sticker.hr/zabica2/index.m3u8"
-          "zabica360;https://kam.rijekaplus.sticker.hr/zabica360/index.m3u8"
-          "opatija1;https://kam.cesterijeka.sticker.hr/opatija1/index.m3u8"
-          "opatija2;https://kam.cesterijeka.sticker.hr/opatija2/index.m3u8"
-          "opatija3;https://kam.cesterijeka.sticker.hr/opatija3/index.m3u8"
-          "opatija4;https://kam.cesterijeka.sticker.hr/opatija4/index.m3u8"
           "k10x;https://kam.rijekaplus.sticker.hr/k10x/index.m3u8"
           "k15x;https://kam.rijekaplus.sticker.hr/k15x/index.m3u8"
           "k16x;https://kam.rijekaplus.sticker.hr/k16x/index.m3u8"
-          "orehovica1;https://kam.rijekaplus.sticker.hr/orehovica1/index.m3u8"
-          "orehovica2;https://kam.rijekaplus.sticker.hr/orehovica2/index.m3u8"
-          "orehovica3;https://kam.rijekaplus.sticker.hr/orehovica3/index.m3u8"
-          "orehovica4;https://kam.rijekaplus.sticker.hr/orehovica4/index.m3u8"
+          "k17x;https://kam.rijekaplus.sticker.hr/k17x/index.m3u8"
+          "k18x;https://kam.rijekaplus.sticker.hr/k18x/index.m3u8"
+          "k20x;https://kam.rijekaplus.sticker.hr/k20x/index.m3u8"
+          "trznicaop;https://wowza.3tcable.hr/Trznica_Op/Trznica_Op.stream/index.m3u8"
+          "slatinapalace;https://wowza.3tcable.hr/Slatina_Palace/Slatina_Palace.stream/playlist.m3u8"
+          "lovrancentar;https://wowza.3tcable.hr/Lovran_Centar/Lovran_Centar.stream/index.m3u8"
           )
 
           generate_thumb() {
