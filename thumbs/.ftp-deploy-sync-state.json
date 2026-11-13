@@ -1,13 +1,13 @@
 {
     "description": "DO NOT DELETE THIS FILE. This file is used to keep track of which files have been synced in the most recent deployment. If you delete this file a resync will need to be done (which can take a while) - read more: https://github.com/SamKirkland/FTP-Deploy-Action",
     "version": "1.0.0",
-    "generatedTime": 1794569498845,
+    "generatedTime": 1794569611001,
     "data": [
         {
             "type": "file",
             "name": ".ftp-deploy-sync-state.json",
             "size": 15860,
-            "hash": "cdc6d3bcdb7582dfaa67986d346af2f708ebd54421f5b6a9e3907abadc3eb934"
+            "hash": "890fb1c003967d9923c23efe0466d9dc115589a3b0421707d8e1a8e6fcf9036c"
         },
         {
             "type": "file",
@@ -199,7 +199,7 @@
             "type": "file",
             "name": "k10x.log",
             "size": 240,
-            "hash": "654c342eae154f8e4aec43abc88ae7bef1bbd131fd6338033e73d10d3b70415c"
+            "hash": "6e53905189d3765c9dc2df7ac6534ede90fe8e27cd8fff3f7ae545e88ba7fce1"
         },
         {
             "type": "file",
@@ -211,7 +211,7 @@
             "type": "file",
             "name": "k15x.log",
             "size": 240,
-            "hash": "86af2250bac7e3288234fd3b8a72ecab468452ed6c23560ba545daeb19f80bf6"
+            "hash": "a665bf3d275212ee8f51e0eca8a1377266aba68992e3082b928ca47ba1a63ed5"
         },
         {
             "type": "file",
@@ -223,7 +223,13 @@
             "type": "file",
             "name": "k16x.log",
             "size": 240,
-            "hash": "3545621ec58545dd257e341b9753f2bd61bfb1117b133b088c7d9fb290c08f75"
+            "hash": "6e4c1fdc46cc07d8831b2c74ee62384f128c45ae6c67e1ed8d237547dfd5a09d"
+        },
+        {
+            "type": "file",
+            "name": "k17x.log",
+            "size": 240,
+            "hash": "294a0e916d4d9459bba713a6d057d1f480aaf284fad6dcc6071ee9eaea4e001f"
         },
         {
             "type": "file",
@@ -233,21 +239,9 @@
         },
         {
             "type": "file",
-            "name": "k17x.log",
-            "size": 240,
-            "hash": "913af1f5d7e72a9f4f7effde0a1e1bf02f89dc992cecddc7966997367c37d721"
-        },
-        {
-            "type": "file",
-            "name": "k18x.jpg",
-            "size": 28781,
-            "hash": "bb7c15c4389266a42ea6a1e2ecd06e993bd15fba02bff2728e5ee5400e9ee26c"
-        },
-        {
-            "type": "file",
             "name": "k18x.log",
             "size": 240,
-            "hash": "fdf716157aa405e9103db9f0b81225f585eae21142637787db92cd6bdf0e778d"
+            "hash": "e4e223f97f9840ea0dc69a047482692ea8050dc02ca1c72cf510f7ea2ad4b8c5"
         },
         {
             "type": "file",
@@ -257,15 +251,21 @@
         },
         {
             "type": "file",
+            "name": "k18x.jpg",
+            "size": 28781,
+            "hash": "bb7c15c4389266a42ea6a1e2ecd06e993bd15fba02bff2728e5ee5400e9ee26c"
+        },
+        {
+            "type": "file",
             "name": "k20x.log",
             "size": 240,
-            "hash": "5bb53928887ca0c441afdfd5a6da9e48b902ec0b8670ae5816b2427b8cd49cdb"
+            "hash": "0b1c507ca2aefa879eeb7530ac633843d6c20d7b4c42a275fd1a4c91adc43836"
         },
         {
             "type": "file",
             "name": "lovrancentar.jpg",
-            "size": 33389,
-            "hash": "98b84893f71c79c2fcba952ba347723cc84b0521a22b10c19ca7dd84e032b09a"
+            "size": 33217,
+            "hash": "49fa95f7f4a6e118c00d674dbbe246f077d0f6983464fdbcd9a5e32c90ec5081"
         },
         {
             "type": "file",
@@ -359,12 +359,6 @@
         },
         {
             "type": "file",
-            "name": "orehovica4.log",
-            "size": 236,
-            "hash": "5b11d7923e852e2f1079265d3ce9bfe7bdf42c1f1b711421c51fa281f47810ec"
-        },
-        {
-            "type": "file",
             "name": "patija1.jpg",
             "size": 20428,
             "hash": "79f3a7056cfa230b6ad468dee708cb6895f8fc2eb48de3482ad4ad2fe0b37351"
@@ -380,6 +374,12 @@
             "name": "patija3.jpg",
             "size": 21097,
             "hash": "5ad075138bc98b1b9d749ba58c46ca241eb32cac701b2deec18ce8fe9f3b7cd6"
+        },
+        {
+            "type": "file",
+            "name": "orehovica4.log",
+            "size": 236,
+            "hash": "5b11d7923e852e2f1079265d3ce9bfe7bdf42c1f1b711421c51fa281f47810ec"
         },
         {
             "type": "file",
@@ -407,21 +407,21 @@
         },
         {
             "type": "file",
+            "name": "slatinapalace.jpg",
+            "size": 45527,
+            "hash": "4e3440082d94a6ca3c9f733a94a55c5f81e8ffaf62a88fc6e1aad183d435a13a"
+        },
+        {
+            "type": "file",
             "name": "rehovica4.jpg",
             "size": 33958,
             "hash": "c8c6119d08e70f96b1829d0208e33f3cda2b5fcf68e19d715e300932b23a8743"
         },
         {
             "type": "file",
-            "name": "slatinapalace.jpg",
-            "size": 46159,
-            "hash": "aa8ab7c043e5af3b5cdb5612b820e30f1ccee0706bf7cacb99fab18fe4035e16"
-        },
-        {
-            "type": "file",
             "name": "trznicaop.jpg",
-            "size": 58770,
-            "hash": "5034725c65c363e042eeeda53b8ef6c6563794edcf2c33c496469c84b3f183e7"
+            "size": 59299,
+            "hash": "989d87d4aaad822b56b75c572b133d91ec06ce9365d2493e3fa2db65e899a834"
         },
         {
             "type": "file",
